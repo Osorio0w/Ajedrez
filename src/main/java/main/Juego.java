@@ -31,7 +31,7 @@ public class Juego
         {
         for (int y = 0; y < 60; y += 60) 
         {
-            imgs[ind] = all.getSubimage(x, y, 60, 60).getScaledInstance(64, 64, BufferedImage.SCALE_SMOOTH);
+            imgs[ind] = all.getSubimage(x, y, 60, 60).getScaledInstance(128,128, BufferedImage.SCALE_SMOOTH);
             ind++;
         }
         }
@@ -74,7 +74,7 @@ public class Juego
         
         // Crear la ventana del juego
         JFrame frame = new JFrame();
-        frame.setBounds(10, 10, 512, 512);
+        frame.setBounds(10, 10, 1024, 1024);
         frame.setUndecorated(true);
         JPanel panel=new JPanel()
         {
@@ -94,7 +94,7 @@ public class Juego
                         {
                             g.setColor(new Color(119, 148, 85));
                         }
-                        g.fillRect(x*64, y*64, 64, 64);
+                        g.fillRect(x*128, y*128, 128, 128);
                         white=!white;
                     }
                 white=!white;
@@ -126,7 +126,16 @@ public class Juego
                     {
                         ind += 6;
                     }
-                    g.drawImage(imgs[ind], p.xp * 64, p.yp * 64, this);
+                    g.drawImage(imgs[ind], p.xp * 128, p.yp * 128, this);
+                }
+                // Dibujar números de fila y letras de columna
+                g.setColor(Color.BLACK);
+                for (int i = 0; i < 8; i++) 
+                {
+                    // Dibujar números de fila
+                    g.drawString(Integer.toString(8 - i), 5, i * (frame.getHeight() / 8) + (frame.getHeight() / 8) / 2);
+                    // Dibujar letras de columna
+                    g.drawString(Character.toString((char) ('A' + i)), i * (frame.getWidth() / 8) + (frame.getWidth() / 8) / 2, frame.getHeight() - 5);
                 }
             }
         };
