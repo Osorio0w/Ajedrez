@@ -106,19 +106,19 @@ public class Juego
                     if (p.name.equalsIgnoreCase("alfil")) 
                     {
                         ind = 0;
-                    } else if (p.name.equalsIgnoreCase("caballo")) 
-                    {
-                        ind = 1;
-                    } else if (p.name.equalsIgnoreCase("torre")) 
-                    {
-                        ind = 2;
-                    } else if (p.name.equalsIgnoreCase("reina")) 
-                    {
-                        ind = 3;
                     } else if (p.name.equalsIgnoreCase("rey")) 
                     {
-                        ind = 4;
+                        ind = 1;
+                    } else if (p.name.equalsIgnoreCase("caballo")) 
+                    {
+                        ind = 2;
                     } else if (p.name.equalsIgnoreCase("peon")) 
+                    {
+                        ind = 3;
+                    } else if (p.name.equalsIgnoreCase("reina")) 
+                    {
+                        ind = 4;
+                    } else if (p.name.equalsIgnoreCase("torre")) 
                     {
                         ind = 5;
                     }
