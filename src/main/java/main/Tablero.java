@@ -142,25 +142,43 @@ public class Tablero extends JPanel
             }
         };
         
-        panel.addMouseListener(new MouseAdapter() {
+        panel.addMouseListener(new MouseAdapter() 
+        {
+            private Pieza piezaSeleccionada = null;
+            private boolean turnoBlancas = true;
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mouseClicked(MouseEvent e) 
+            {
                 int clickX = e.getX();
                 int clickY = e.getY();
-                
+
                 int gridX = clickX / 128;
                 int gridY = clickY / 128;
-                // Iterar sobre todas las piezas
-                for (Pieza p : ps)
+
+                Vector2D clickVector = new Vector2D(gridX, gridY);
+
+                // Verificar si ya hay una pieza seleccionada
+                if (piezaSeleccionada != null && piezaSeleccionada.esBlanca == turnoBlancas) 
                 {
-                    // Verificar si la pieza está en la casilla clicada
-                    if (p.xp == gridX && p.yp == gridY) 
-                    {
-                        // Mover la pieza a una nueva posición (por ejemplo, sumar 1 a la posición x e y)
-                        p.move(p.xp + 0, p.yp + 1);
-                        
-                        panel.repaint();
-                        break; 
+                    // Mover la pieza seleccionada a la posición del segundo clic
+                    piezaSeleccionada.move(gridX, gridY);
+                    piezaSeleccionada = null; // Limpiar la selección
+                    panel.repaint();
+                    
+                    //Cambiar el turno al otro jugador
+                    turnoBlancas = !turnoBlancas;
+                } else 
+                {
+                    // Iterar sobre todas las piezas para seleccionar la pieza clicada
+                    for (Pieza p : ps) {
+                        // Verificar si la pieza está en la casilla clicada
+                        if (p.xp == clickVector.getGridX() && p.yp == clickVector.getGridY()) {
+                            //Seleccionar la pieza si es el turno adecuado
+                            if(p.esBlanca == turnoBlancas){
+                            piezaSeleccionada = p;
+                            break;
+                            }
+                        }
                     }
                 }
             }

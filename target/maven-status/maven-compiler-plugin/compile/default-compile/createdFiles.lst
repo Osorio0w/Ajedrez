@@ -1,5 +1,6 @@
-main\Pieza.class
 main\Peon.class
+main\Vector2D.class
+main\Pieza.class
 main\Tablero$2.class
 main\Tablero$1.class
 main\Tablero.class
