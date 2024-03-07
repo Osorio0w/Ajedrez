@@ -10,10 +10,11 @@ import java.util.LinkedList;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-
-public class Juego 
-{   
+public class Tablero extends JPanel
+{
     public static void main(String[] args) throws IOException 
     {
         // Lista para almacenar las piezas del juego
@@ -29,11 +30,11 @@ public class Juego
         // Iterar a lo largo del eje y para recortar cada fila de piezas
         for(int x = 0; x < 720; x+=60)
         {
-        for (int y = 0; y < 60; y += 60) 
-        {
-            imgs[ind] = all.getSubimage(x, y, 60, 60).getScaledInstance(128,128, BufferedImage.SCALE_SMOOTH);
-            ind++;
-        }
+            for (int y = 0; y < 60; y += 60) 
+            {
+                imgs[ind] = all.getSubimage(x, y, 60, 60).getScaledInstance(128,128, BufferedImage.SCALE_SMOOTH);
+                ind++;
+            }
         }
         
         // Crear las instancias de las piezas negras
@@ -69,12 +70,13 @@ public class Juego
         Pieza b_peon4   = new Pieza(4, 6, true, "peon", ps);
         Pieza b_peon5   = new Pieza(5, 6, true, "peon", ps);
         Pieza b_peon6   = new Pieza(6, 6, true, "peon", ps);
-        Pieza b_peon7   = new Pieza(7, 6, true,"peon", ps);
+        Pieza b_peon7   = new Pieza(7, 6, true, "peon", ps);
         Pieza b_peon8   = new Pieza(0, 6, true, "peon", ps); 
         
         // Crear la ventana del juego
         JFrame frame = new JFrame();
         frame.setBounds(10, 10, 1024, 1024);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setUndecorated(true);
         JPanel panel=new JPanel()
         {
@@ -139,8 +141,32 @@ public class Juego
                 }
             }
         };
+        
+        panel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int clickX = e.getX();
+                int clickY = e.getY();
+                
+                int gridX = clickX / 128;
+                int gridY = clickY / 128;
+                // Iterar sobre todas las piezas
+                for (Pieza p : ps)
+                {
+                    // Verificar si la pieza está en la casilla clicada
+                    if (p.xp == gridX && p.yp == gridY) 
+                    {
+                        // Mover la pieza a una nueva posición (por ejemplo, sumar 1 a la posición x e y)
+                        p.move(p.xp + 0, p.yp + 1);
+                        
+                        panel.repaint();
+                        break; 
+                    }
+                }
+            }
+        });
+        
         frame.add(panel);
-        frame.setDefaultCloseOperation(3);
         frame.setVisible(true);
     }
 }

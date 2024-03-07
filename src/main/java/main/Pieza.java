@@ -19,17 +19,19 @@ public class Pieza
         ps.add(this);
     }
     
+    // Método para mover la pieza a una posición específica
     public void move(int xp,int yp)
     {
+        // Busca entre todas las piezas
         ps.stream().filter((p) -> (p.xp==xp&&p.yp==yp)).forEachOrdered((p) -> 
         {
-            p.kill();
+            p.kill();  // Si encuentra una pieza en la posición de destino, la elimina
         });
-        this.xp=xp;
-        this.yp=yp;
+        this.xp = xp; // Actualiza la posición x de la pieza
+        this.yp = yp; // Actualiza la posición y de la pieza
     }
     public void kill()
     {
-        ps.remove(this);
+        ps.remove(this); // Elimina esta pieza de la lista de piezas
     }
 }
