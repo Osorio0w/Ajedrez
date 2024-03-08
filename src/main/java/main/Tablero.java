@@ -142,47 +142,40 @@ public class Tablero extends JPanel
             }
         };
         
-        panel.addMouseListener(new MouseAdapter() 
-        {
-            private Pieza piezaSeleccionada = null;
+        panel.addMouseListener(new MouseAdapter() {
+            public Pieza piezaSeleccionada = null;
             private boolean turnoBlancas = true;
+
             @Override
-            public void mouseClicked(MouseEvent e) 
-            {
+            public void mouseClicked(MouseEvent e) {
                 int clickX = e.getX();
                 int clickY = e.getY();
 
                 int gridX = clickX / 128;
                 int gridY = clickY / 128;
 
-                Vector2D clickVector = new Vector2D(gridX, gridY);
-
-                // Verificar si ya hay una pieza seleccionada
-                if (piezaSeleccionada != null && piezaSeleccionada.esBlanca == turnoBlancas) 
-                {
-                    // Mover la pieza seleccionada a la posición del segundo clic
-                    piezaSeleccionada.move(gridX, gridY);
-                    piezaSeleccionada = null; // Limpiar la selección
-                    panel.repaint();
-                    
-                    //Cambiar el turno al otro jugador
-                    turnoBlancas = !turnoBlancas;
-                } else 
-                {
-                    // Iterar sobre todas las piezas para seleccionar la pieza clicada
-                    for (Pieza p : ps) {
-                        // Verificar si la pieza está en la casilla clicada
-                        if (p.xp == clickVector.getGridX() && p.yp == clickVector.getGridY()) {
-                            //Seleccionar la pieza si es el turno adecuado
-                            if(p.esBlanca == turnoBlancas){
-                            piezaSeleccionada = p;
-                            break;
-                            }
-                        }
+                // Iterar sobre todas las piezas para seleccionar la pieza clicada
+                for (Pieza p : ps) {
+                    // Verificar si la pieza está en la casilla clicada
+                    if (p.xp == gridX && p.yp == gridY && p.esBlanca == turnoBlancas) {
+                        piezaSeleccionada = p;
+                        break;
                     }
+                }
+
+                // Verificar si ya hay una pieza seleccionada y si se hizo clic en una casilla vacía
+                if (piezaSeleccionada != null && (piezaSeleccionada.xp != gridX || piezaSeleccionada.yp != gridY)) {
+                    // Intentar mover la pieza seleccionada a la posición del segundo clic
+                    piezaSeleccionada.move(gridX, gridY);
+                    piezaSeleccionada = null; 
+                    panel.repaint();
+
+                    // Cambiar el turno al otro jugador
+                    turnoBlancas = !turnoBlancas;
                 }
             }
         });
+        
         
         frame.add(panel);
         frame.setVisible(true);
