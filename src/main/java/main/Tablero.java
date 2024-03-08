@@ -17,22 +17,21 @@ public class Tablero extends JPanel
 {
     public static void main(String[] args) throws IOException 
     {
-        // Lista para almacenar las piezas del juego
-        LinkedList<Pieza> piezas=new LinkedList<>();
+        LinkedList<Pieza> piezas = new LinkedList<>();
         
         // Cargar la imagen que contiene las piezas
-        BufferedImage all=ImageIO.read(new File("src/main/java/imagenes/piezas.png"));
+        BufferedImage imagenPiezas = ImageIO.read(new File("src/main/java/imagenes/piezas.png"));
         
         // Arreglo para almacenar las imágenes de las piezas recortadas
-        Image imgs[]=new Image[12];
-        int ind=0;
+        Image[] imagenes = new Image[12];
+        int ind = 0;
        
         // Iterar a lo largo del eje y para recortar cada fila de piezas
         for(int x = 0; x < 720; x+=60)
         {
             for (int y = 0; y < 60; y += 60) 
             {
-                imgs[ind] = all.getSubimage(x, y, 60, 60).getScaledInstance(128,128, BufferedImage.SCALE_SMOOTH);
+                imagenes[ind] = imagenPiezas.getSubimage(x, y, 60, 60).getScaledInstance(128,128, BufferedImage.SCALE_SMOOTH);
                 ind++;
             }
         }
@@ -74,22 +73,22 @@ public class Tablero extends JPanel
         Pieza b_peon8   = new Pieza(0, 6, true, "peon", piezas); 
         
         // Crear la ventana del juego
-        JFrame frame = new JFrame();
-        frame.setBounds(10, 10, 1024, 1024);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setUndecorated(true);
-        JPanel panel=new JPanel()
+        JFrame ventana = new JFrame();
+        ventana.setBounds(10, 10, 1024, 1024);
+        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ventana.setUndecorated(true);
+        JPanel panel = new JPanel()
         {
             @Override
             public void paint(Graphics g) 
             {
-            boolean white=true;
+            boolean blanco = true;
             // Dibujar el tablero
                 for(int y = 0; y < 8; y ++)
                 {
                     for(int x = 0 ; x < 8; x++)
                     {
-                        if(white)
+                        if(blanco)
                         {
                             g.setColor(new Color(235,235, 208));
                         }else
@@ -97,9 +96,9 @@ public class Tablero extends JPanel
                             g.setColor(new Color(119, 148, 85));
                         }
                         g.fillRect(x*128, y*128, 128, 128);
-                        white=!white;
+                        blanco=!blanco;
                     }
-                white=!white;
+                blanco=!blanco;
                 } 
                 // Dibujar las piezas en el tablero
                 for (Pieza p : piezas) 
@@ -128,16 +127,16 @@ public class Tablero extends JPanel
                     {
                         ind += 6;
                     }
-                    g.drawImage(imgs[ind], p.posicionX * 128, p.posicionY * 128, this);
+                    g.drawImage(imagenes[ind], p.posicionX * 128, p.posicionY * 128, this);
                 }
                 // Dibujar números de fila y letras de columna
                 g.setColor(Color.BLACK);
                 for (int i = 0; i < 8; i++) 
                 {
                     // Dibujar números de fila
-                    g.drawString(Integer.toString(8 - i), 5, i * (frame.getHeight() / 8) + (frame.getHeight() / 8) / 2);
+                    g.drawString(Integer.toString(8 - i), 5, i * (ventana.getHeight() / 8) + (ventana.getHeight() / 8) / 2);
                     // Dibujar letras de columna
-                    g.drawString(Character.toString((char) ('A' + i)), i * (frame.getWidth() / 8) + (frame.getWidth() / 8) / 2, frame.getHeight() - 5);
+                    g.drawString(Character.toString((char) ('A' + i)), i * (ventana.getWidth() / 8) + (ventana.getWidth() / 8) / 2, ventana.getHeight() - 5);
                 }
             }
         };
@@ -166,7 +165,7 @@ public class Tablero extends JPanel
                 // Verificar si ya hay una pieza seleccionada y si se hizo clic en una casilla vacía
                 if (piezaSeleccionada != null && (piezaSeleccionada.posicionX != cuadriculaX || piezaSeleccionada.posicionY != cuadriculaY)) {
                     // Intentar mover la pieza seleccionada a la posición del segundo clic
-                    piezaSeleccionada.move(cuadriculaX, cuadriculaY);
+                    piezaSeleccionada.mover(cuadriculaX, cuadriculaY);
                     piezaSeleccionada = null; 
                     panel.repaint();
 
@@ -177,7 +176,7 @@ public class Tablero extends JPanel
         });
         
         
-        frame.add(panel);
-        frame.setVisible(true);
+        ventana.add(panel);
+        ventana.setVisible(true);
     }
 }

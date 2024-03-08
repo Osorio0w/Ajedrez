@@ -2,7 +2,6 @@ package main;
 
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 
 public class Pieza {
     int posicionX;
@@ -21,7 +20,7 @@ public class Pieza {
     }
 
     // Método para mover la pieza a una posición específica
-    public void move(int x, int y) {
+    public void mover(int x, int y) {
         switch (nombre) {
             case "torre":
                 if (mueveLineaRecta(x, y)) {
