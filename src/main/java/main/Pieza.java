@@ -22,7 +22,7 @@ public class Pieza {
 
     // Método para mover la pieza a una posición específica
     public void move(int x, int y) {
-        switch (nombre.toLowerCase()) {
+        switch (nombre) {
             case "torre":
                 if (mueveLineaRecta(x, y)) {
                     moverPieza(x, y);

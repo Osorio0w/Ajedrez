@@ -18,7 +18,7 @@ public class Tablero extends JPanel
     public static void main(String[] args) throws IOException 
     {
         // Lista para almacenar las piezas del juego
-        LinkedList<Pieza> ps=new LinkedList<>();
+        LinkedList<Pieza> piezas=new LinkedList<>();
         
         // Cargar la imagen que contiene las piezas
         BufferedImage all=ImageIO.read(new File("src/main/java/imagenes/piezas.png"));
@@ -38,40 +38,40 @@ public class Tablero extends JPanel
         }
         
         // Crear las instancias de las piezas negras
-        Pieza n_torre   = new Pieza(0, 0, false, "torre", ps);
-        Pieza n_caballo = new Pieza(1, 0, false, "caballo", ps);
-        Pieza n_alfil   = new Pieza(2, 0, false, "alfil", ps);
-        Pieza n_reina   = new Pieza(3, 0, false, "reina", ps);
-        Pieza n_rey     = new Pieza(4, 0, false, "rey", ps);
-        Pieza n_alfil2  = new Pieza(5, 0, false, "alfil", ps);
-        Pieza n_caballo2= new Pieza(6, 0, false, "caballo", ps);
-        Pieza n_torre2  = new Pieza(7, 0, false, "torre", ps);
-        Pieza n_peon1   = new Pieza(1, 1, false, "peon", ps);
-        Pieza n_peon2   = new Pieza(2, 1, false, "peon", ps);
-        Pieza n_peon3   = new Pieza(3, 1, false, "peon", ps);
-        Pieza n_peon4   = new Pieza(4, 1, false, "peon", ps);
-        Pieza n_peon5   = new Pieza(5, 1, false, "peon", ps);
-        Pieza n_peon6   = new Pieza(6, 1, false, "peon", ps);
-        Pieza n_peon7   = new Pieza(7, 1, false, "peon", ps);
-        Pieza n_peon8   = new Pieza(0, 1, false, "peon", ps);
+        Pieza n_torre   = new Pieza(0, 0, false, "torre", piezas);
+        Pieza n_caballo = new Pieza(1, 0, false, "caballo", piezas);
+        Pieza n_alfil   = new Pieza(2, 0, false, "alfil", piezas);
+        Pieza n_reina   = new Pieza(3, 0, false, "reina", piezas);
+        Pieza n_rey     = new Pieza(4, 0, false, "rey", piezas);
+        Pieza n_alfil2  = new Pieza(5, 0, false, "alfil", piezas);
+        Pieza n_caballo2= new Pieza(6, 0, false, "caballo", piezas);
+        Pieza n_torre2  = new Pieza(7, 0, false, "torre", piezas);
+        Pieza n_peon1   = new Pieza(1, 1, false, "peon", piezas);
+        Pieza n_peon2   = new Pieza(2, 1, false, "peon", piezas);
+        Pieza n_peon3   = new Pieza(3, 1, false, "peon", piezas);
+        Pieza n_peon4   = new Pieza(4, 1, false, "peon", piezas);
+        Pieza n_peon5   = new Pieza(5, 1, false, "peon", piezas);
+        Pieza n_peon6   = new Pieza(6, 1, false, "peon", piezas);
+        Pieza n_peon7   = new Pieza(7, 1, false, "peon", piezas);
+        Pieza n_peon8   = new Pieza(0, 1, false, "peon", piezas);
         
         // Crear las instancias de las piezas blancas
-        Pieza b_torre   = new Pieza(0, 7, true, "torre", ps);
-        Pieza b_caballo = new Pieza(1, 7, true, "caballo", ps);
-        Pieza b_alfil   = new Pieza(2, 7, true, "alfil", ps);
-        Pieza b_reina   = new Pieza(3, 7, true, "reina", ps);
-        Pieza b_rey     = new Pieza(4, 7, true, "rey", ps);
-        Pieza b_alfil2  = new Pieza(5, 7, true, "alfil", ps);
-        Pieza b_caballo2= new Pieza(6, 7, true, "caballo", ps);
-        Pieza b_torre2  = new Pieza(7, 7, true, "torre", ps);
-        Pieza b_peon1   = new Pieza(1, 6, true, "peon", ps);
-        Pieza b_peon2   = new Pieza(2, 6, true, "peon", ps);
-        Pieza b_peon3   = new Pieza(3, 6, true, "peon", ps);
-        Pieza b_peon4   = new Pieza(4, 6, true, "peon", ps);
-        Pieza b_peon5   = new Pieza(5, 6, true, "peon", ps);
-        Pieza b_peon6   = new Pieza(6, 6, true, "peon", ps);
-        Pieza b_peon7   = new Pieza(7, 6, true, "peon", ps);
-        Pieza b_peon8   = new Pieza(0, 6, true, "peon", ps); 
+        Pieza b_torre   = new Pieza(0, 7, true, "torre", piezas);
+        Pieza b_caballo = new Pieza(1, 7, true, "caballo", piezas);
+        Pieza b_alfil   = new Pieza(2, 7, true, "alfil", piezas);
+        Pieza b_reina   = new Pieza(3, 7, true, "reina", piezas);
+        Pieza b_rey     = new Pieza(4, 7, true, "rey", piezas);
+        Pieza b_alfil2  = new Pieza(5, 7, true, "alfil", piezas);
+        Pieza b_caballo2= new Pieza(6, 7, true, "caballo", piezas);
+        Pieza b_torre2  = new Pieza(7, 7, true, "torre", piezas);
+        Pieza b_peon1   = new Pieza(1, 6, true, "peon", piezas);
+        Pieza b_peon2   = new Pieza(2, 6, true, "peon", piezas);
+        Pieza b_peon3   = new Pieza(3, 6, true, "peon", piezas);
+        Pieza b_peon4   = new Pieza(4, 6, true, "peon", piezas);
+        Pieza b_peon5   = new Pieza(5, 6, true, "peon", piezas);
+        Pieza b_peon6   = new Pieza(6, 6, true, "peon", piezas);
+        Pieza b_peon7   = new Pieza(7, 6, true, "peon", piezas);
+        Pieza b_peon8   = new Pieza(0, 6, true, "peon", piezas); 
         
         // Crear la ventana del juego
         JFrame frame = new JFrame();
@@ -102,7 +102,7 @@ public class Tablero extends JPanel
                 white=!white;
                 } 
                 // Dibujar las piezas en el tablero
-                for (Pieza p : ps) 
+                for (Pieza p : piezas) 
                 {
                     int ind = 0;
                     if (p.nombre.equals("alfil")) 
@@ -151,22 +151,22 @@ public class Tablero extends JPanel
                 int clickX = e.getX();
                 int clickY = e.getY();
 
-                int gridX = clickX / 128;
-                int gridY = clickY / 128;
+                int cuadriculaX = clickX / 128;
+                int cuadriculaY = clickY / 128;
 
                 // Iterar sobre todas las piezas para seleccionar la pieza clicada
-                for (Pieza p : ps) {
+                for (Pieza p : piezas) {
                     // Verificar si la pieza está en la casilla clicada
-                    if (p.posicionX == gridX && p.posicionY == gridY && p.esBlanca == turnoBlancas) {
+                    if (p.posicionX == cuadriculaX && p.posicionY == cuadriculaY && p.esBlanca == turnoBlancas) {
                         piezaSeleccionada = p;
                         break;
                     }
                 }
 
                 // Verificar si ya hay una pieza seleccionada y si se hizo clic en una casilla vacía
-                if (piezaSeleccionada != null && (piezaSeleccionada.posicionX != gridX || piezaSeleccionada.posicionY != gridY)) {
+                if (piezaSeleccionada != null && (piezaSeleccionada.posicionX != cuadriculaX || piezaSeleccionada.posicionY != cuadriculaY)) {
                     // Intentar mover la pieza seleccionada a la posición del segundo clic
-                    piezaSeleccionada.move(gridX, gridY);
+                    piezaSeleccionada.move(cuadriculaX, cuadriculaY);
                     piezaSeleccionada = null; 
                     panel.repaint();
 
