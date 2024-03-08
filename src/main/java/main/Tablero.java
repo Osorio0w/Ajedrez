@@ -100,27 +100,27 @@ public class Tablero extends JPanel
                         white=!white;
                     }
                 white=!white;
-                }
+                } 
                 // Dibujar las piezas en el tablero
                 for (Pieza p : ps) 
                 {
                     int ind = 0;
-                    if (p.name.equalsIgnoreCase("alfil")) 
+                    if (p.nombre.equals("alfil")) 
                     {
                         ind = 0;
-                    } else if (p.name.equalsIgnoreCase("rey")) 
+                    } else if (p.nombre.equals("rey")) 
                     {
                         ind = 1;
-                    } else if (p.name.equalsIgnoreCase("caballo")) 
+                    } else if (p.nombre.equals("caballo")) 
                     {
                         ind = 2;
-                    } else if (p.name.equalsIgnoreCase("peon")) 
+                    } else if (p.nombre.equals("peon")) 
                     {
                         ind = 3;
-                    } else if (p.name.equalsIgnoreCase("reina")) 
+                    } else if (p.nombre.equals("reina")) 
                     {
                         ind = 4;
-                    } else if (p.name.equalsIgnoreCase("torre")) 
+                    } else if (p.nombre.equals("torre")) 
                     {
                         ind = 5;
                     }
@@ -128,7 +128,7 @@ public class Tablero extends JPanel
                     {
                         ind += 6;
                     }
-                    g.drawImage(imgs[ind], p.xp * 128, p.yp * 128, this);
+                    g.drawImage(imgs[ind], p.posicionX * 128, p.posicionY * 128, this);
                 }
                 // Dibujar números de fila y letras de columna
                 g.setColor(Color.BLACK);
@@ -157,14 +157,14 @@ public class Tablero extends JPanel
                 // Iterar sobre todas las piezas para seleccionar la pieza clicada
                 for (Pieza p : ps) {
                     // Verificar si la pieza está en la casilla clicada
-                    if (p.xp == gridX && p.yp == gridY && p.esBlanca == turnoBlancas) {
+                    if (p.posicionX == gridX && p.posicionY == gridY && p.esBlanca == turnoBlancas) {
                         piezaSeleccionada = p;
                         break;
                     }
                 }
 
                 // Verificar si ya hay una pieza seleccionada y si se hizo clic en una casilla vacía
-                if (piezaSeleccionada != null && (piezaSeleccionada.xp != gridX || piezaSeleccionada.yp != gridY)) {
+                if (piezaSeleccionada != null && (piezaSeleccionada.posicionX != gridX || piezaSeleccionada.posicionY != gridY)) {
                     // Intentar mover la pieza seleccionada a la posición del segundo clic
                     piezaSeleccionada.move(gridX, gridY);
                     piezaSeleccionada = null; 
