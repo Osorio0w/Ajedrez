@@ -13,20 +13,23 @@ import javax.swing.JPanel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class Tablero extends JPanel
-{
-    public static void main(String[] args) throws IOException 
+public class Tablero extends JPanel {
+    private static Pieza piezaSeleccionada = null; 
+    private static boolean turnoBlancas = true; 
+    private LinkedList<Pieza> piezas = new LinkedList<>();
+    
+    public Tablero() 
     {
-        LinkedList<Pieza> piezas = new LinkedList<>();
+        piezas = new LinkedList<>();
+    }
+    public static void main(String[] args) throws IOException {
+        Tablero tablero = new Tablero(); 
+        LinkedList<Pieza> piezas = tablero.piezas;
         
-        // Cargar la imagen que contiene las piezas
         BufferedImage imagenPiezas = ImageIO.read(new File("src/main/java/imagenes/piezas.png"));
-        
-        // Arreglo para almacenar las imágenes de las piezas recortadas
         Image[] imagenes = new Image[12];
         int ind = 0;
-       
-        // Iterar a lo largo del eje y para recortar cada fila de piezas
+
         for(int x = 0; x < 720; x+=60)
         {
             for (int y = 0; y < 60; y += 60) 
@@ -71,36 +74,28 @@ public class Tablero extends JPanel
         Pieza b_peon6   = new Pieza(6, 6, true, "peon", piezas);
         Pieza b_peon7   = new Pieza(7, 6, true, "peon", piezas);
         Pieza b_peon8   = new Pieza(0, 6, true, "peon", piezas); 
-        
-        // Crear la ventana del juego
+
+
         JFrame ventana = new JFrame();
         ventana.setBounds(10, 10, 1024, 1024);
         ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ventana.setUndecorated(true);
-        JPanel panel = new JPanel()
-        {
+        JPanel panel = new JPanel() {
             @Override
-            public void paint(Graphics g) 
-            {
-            boolean blanco = true;
-            // Dibujar el tablero
-                for(int y = 0; y < 8; y ++)
-                {
-                    for(int x = 0 ; x < 8; x++)
-                    {
-                        if(blanco)
-                        {
-                            g.setColor(new Color(235,235, 208));
-                        }else
-                        {
+            public void paint(Graphics g) {
+                boolean blanco = true;
+                for (int y = 0; y < 8; y++) {
+                    for (int x = 0; x < 8; x++) {
+                        if (blanco) {
+                            g.setColor(new Color(235, 235, 208));
+                        } else {
                             g.setColor(new Color(119, 148, 85));
                         }
-                        g.fillRect(x*128, y*128, 128, 128);
-                        blanco=!blanco;
+                        g.fillRect(x * 128, y * 128, 128, 128);
+                        blanco = !blanco;
                     }
-                blanco=!blanco;
-                } 
-                // Dibujar las piezas en el tablero
+                    blanco = !blanco;
+                }
                 for (Pieza p : piezas) 
                 {
                     int ind = 0;
@@ -129,54 +124,90 @@ public class Tablero extends JPanel
                     }
                     g.drawImage(imagenes[ind], p.posicionX * 128, p.posicionY * 128, this);
                 }
-                // Dibujar números de fila y letras de columna
                 g.setColor(Color.BLACK);
-                for (int i = 0; i < 8; i++) 
-                {
-                    // Dibujar números de fila
+                for (int i = 0; i < 8; i++) {
                     g.drawString(Integer.toString(8 - i), 5, i * (ventana.getHeight() / 8) + (ventana.getHeight() / 8) / 2);
-                    // Dibujar letras de columna
                     g.drawString(Character.toString((char) ('A' + i)), i * (ventana.getWidth() / 8) + (ventana.getWidth() / 8) / 2, ventana.getHeight() - 5);
                 }
             }
         };
-        
-        panel.addMouseListener(new MouseAdapter() {
-            public Pieza piezaSeleccionada = null;
-            private boolean turnoBlancas = true;
 
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int clickX = e.getX();
-                int clickY = e.getY();
+    panel.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+        int clickX = e.getX();
+        int clickY = e.getY();
+        Tablero tablero = new Tablero();
 
-                int cuadriculaX = clickX / 128;
-                int cuadriculaY = clickY / 128;
+        int cuadriculaX = clickX / 128;
+        int cuadriculaY = clickY / 128;
 
-                // Iterar sobre todas las piezas para seleccionar la pieza clicada
-                for (Pieza p : piezas) {
-                    // Verificar si la pieza está en la casilla clicada
-                    if (p.posicionX == cuadriculaX && p.posicionY == cuadriculaY && p.esBlanca == turnoBlancas) {
-                        piezaSeleccionada = p;
-                        break;
+        // Si no hay una pieza seleccionada, intentamos seleccionar una
+        if (piezaSeleccionada == null) {
+            for (Pieza p : piezas) {
+                if (p.posicionX == cuadriculaX && p.posicionY == cuadriculaY && p.esBlanca == turnoBlancas) {
+                    piezaSeleccionada = p;
+                    break;
+                }
+            }
+        } else {
+            if (!(piezaSeleccionada.posicionX == cuadriculaX && piezaSeleccionada.posicionY == cuadriculaY)) {
+                boolean movimientoExitoso = piezaSeleccionada.mover(cuadriculaX, cuadriculaY);
+                
+                if (!movimientoExitoso && piezaSeleccionada.nombre.equals("rey")) { 
+                    boolean enroqueCorto = piezaSeleccionada.enroqueCorto(cuadriculaX, cuadriculaY);
+                    boolean enroqueLargo = piezaSeleccionada.enroqueLargo(cuadriculaX, cuadriculaY);
+                    if (enroqueCorto || enroqueLargo) {
+                        int torreX = enroqueCorto ? 5 : 3;
+                        int torreY = piezaSeleccionada.esBlanca ? 7 : 0;
+                        Pieza torre = tablero.obtenerTorre(torreX, torreY);
+                        if (torre != null) {
+                            torre.mover(enroqueCorto ? 6 : 2, torreY);
+                        }
+                        piezaSeleccionada.mover(enroqueCorto ? 6 : 2, cuadriculaY);
+                        panel.repaint();
+                        turnoBlancas = !turnoBlancas;
+                        piezaSeleccionada = null;
+                        return;
                     }
                 }
 
-                // Verificar si ya hay una pieza seleccionada y si se hizo clic en una casilla vacía
-                if (piezaSeleccionada != null && (piezaSeleccionada.posicionX != cuadriculaX || piezaSeleccionada.posicionY != cuadriculaY)) {
-                    // Intentar mover la pieza seleccionada a la posición del segundo clic
-                    piezaSeleccionada.mover(cuadriculaX, cuadriculaY);
-                    piezaSeleccionada = null; 
+                if (movimientoExitoso) {
                     panel.repaint();
-
-                    // Cambiar el turno al otro jugador
-                    turnoBlancas = !turnoBlancas;
+                    if(turnoBlancas)
+                    {
+                        turnoBlancas  = false;
+                    } else {
+                        turnoBlancas = true;
+                    }
                 }
             }
-        });
-        
-        
+            piezaSeleccionada = null;
+        }
+    }
+});
+
+
+
         ventana.add(panel);
         ventana.setVisible(true);
+    }
+    
+    public Pieza obtenerPieza(int x, int y) {
+        for (Pieza pieza : piezas) {
+            if (pieza.posicionX == x && pieza.posicionY == y) {
+                return pieza;
+            }
+        }
+        return null;
+    }
+
+    public Pieza obtenerTorre(int x, int y) {
+        for (Pieza pieza : piezas) {
+            if (pieza.nombre.equals("torre") && pieza.posicionX == x && pieza.posicionY == y) {
+                return pieza;
+            }
+        }
+        return null;
     }
 }
